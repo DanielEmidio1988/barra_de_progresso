@@ -8,17 +8,15 @@ function updateProgress(){
     progressBar.style.width = progress + '%'
 }
 
-function nextProgress(){
-    progress += 10
-    if(progress > 100) progress = 100
-    updateProgress()
+function setProgress(num){
+    return function(){
+        progress += num
+        if(progress > 100) progress = 100
+        if(progress < 0) progress = 0
+        updateProgress()
+    }
+
 }
 
-function previousProgress(){
-    progress -= 10
-    if(progress < 0) progress = 0
-    updateProgress()
-}
-
-nextBtn.addEventListener('click', nextProgress)
-previousBtn.addEventListener('click', previousProgress)
+nextBtn.addEventListener('click', setProgress(10))
+previousBtn.addEventListener('click', setProgress(-10))
